@@ -11,16 +11,20 @@ def generate_message(sent, num):
 
     sent_prefix = ""
     if sent == True:
-        sent_prefix = "sent/"
+        sent_prefix = "sent-"
 
-    href = f"////messages/{sent_prefix}{num}.html"
+    href = f"////message-{sent_prefix}{num}.html"
 
     unread = choice(["font-weight: bold", ""]) 
     author = choice(["Emma", "Liam", "Olivia", "Noah", "Ava", "William", "Sophia", "James", "Isabella", "Oliver"]) 
     title = f"placeholder title for msg {num}"
     date = random_date(datetime(2024, 1, 1), datetime(2024, 12, 31)).strftime("%Y-%m-%d")
-    with open(f'pages/messages/{sent_prefix}{num}.html', "w") as msg:
-        msg.write(f"Example message\n\t\tMessage number {num}\nAuthor: {author}")
+    with open(f'pages/messages/message-{sent_prefix}{num}.html', "w") as msg:
+        msg.write(f"""
+<div class='container-message-content'>
+                  Example message\n\t\tMessage number {num}\nAuthor: {author}
+</div>
+                  """)
         msg.close()
     if sent == True:
         message_str += f'<td>{author}</td>'
