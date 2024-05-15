@@ -5,7 +5,6 @@ devenv.local.nix
 # direnv
 .direnv
 pages/*
-pages/messages/*
 !pages/messages/
 # pre-commit
 .pre-commit-config.yaml
