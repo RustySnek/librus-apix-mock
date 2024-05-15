@@ -8,6 +8,8 @@ DIRECTORY_TO_SERVE = "pages"
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY_TO_SERVE, **kwargs)
+    def do_POST(self):
+        self.do_GET()  
 
 with socketserver.TCPServer(("", PORT), Handler, bind_and_activate=False) as httpd:
     httpd.allow_reuse_address = True
