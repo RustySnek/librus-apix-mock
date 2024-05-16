@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from random import choice, randint
 
+
 def is_empty(day, period):
     if period == 0:
         return True
@@ -17,6 +18,7 @@ def is_empty(day, period):
     elif day in [5, 6]:
         return True
     return False
+
 
 def generate_day(day_num, _from, to, empty):
     lesson_teachers = [
@@ -45,24 +47,25 @@ def generate_day(day_num, _from, to, empty):
     <div class="center plan-lekcji-info"></div>
       <a title=""></a>
         """
-    return day_str + '</td>'
+    return day_str + "</td>"
+
+
 def generate_period(period):
     start_period = datetime.now().replace(hour=7, minute=10, second=0, microsecond=0)
-    this_period = start_period + timedelta(minutes=45*period)
+    this_period = start_period + timedelta(minutes=45 * period)
 
     if period == 5:
         recess_length = 20
-        this_period += timedelta(minutes=10*4)
+        this_period += timedelta(minutes=10 * 4)
         this_period += timedelta(minutes=20)
     elif period > 5:
         recess_length = 5
-        this_period += timedelta(minutes=5*(period-5))
-        this_period += timedelta(minutes=10*4)
+        this_period += timedelta(minutes=5 * (period - 5))
+        this_period += timedelta(minutes=10 * 4)
         this_period += timedelta(minutes=20)
     else:
         recess_length = 10
-        this_period += timedelta(minutes=10*(period))
-
+        this_period += timedelta(minutes=10 * (period))
 
     if period == 0:
         period_str = ""
@@ -80,25 +83,34 @@ def generate_period(period):
   <tr class="line1" >
     <td class="center">{period}</td>
     <th class="center border-top">{_from}-{to}</th>
-   """ 
-    period_str += "".join([generate_day(day, _from, to, empty) for day, empty in [(day, is_empty(day, period)) for day in range(7)]])
-    return period_str + '</tr>'
+   """
+    period_str += "".join(
+        [
+            generate_day(day, _from, to, empty)
+            for day, empty in [(day, is_empty(day, period)) for day in range(7)]
+        ]
+    )
+    return period_str + "</tr>"
+
 
 def generate_periods(final_page, periods):
     for period in range(0, periods):
         final_page += generate_period(period)
     return final_page
 
+
 def generate_timetable():
     final_page = '<table class="decorated plan-lekcji">'
     final_page = generate_periods(final_page, 15)
-    return final_page + '</table>'
-    
+    return final_page + "</table>"
+
+
 def generate_timetable_html():
     final_page = generate_timetable()
-    with open('pages/timetable.html', "w") as timetable:
+    with open("pages/timetable.html", "w") as timetable:
         timetable.write(final_page)
         timetable.close()
+
 
 if __name__ == "__main__":
     generate_timetable_html()

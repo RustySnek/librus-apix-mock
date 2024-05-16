@@ -1,6 +1,7 @@
-
 from random import choice
 from generate_grades import datetime, random_date
+import os
+
 
 def generate_message(sent, num):
     message_str = """
@@ -15,12 +16,28 @@ def generate_message(sent, num):
 
     href = f"////message-{sent_prefix}{num}.html"
 
-    unread = choice(["font-weight: bold", ""]) 
-    author = choice(["Emma", "Liam", "Olivia", "Noah", "Ava", "William", "Sophia", "James", "Isabella", "Oliver"]) 
+    unread = choice(["font-weight: bold", ""])
+    author = choice(
+        [
+            "Emma",
+            "Liam",
+            "Olivia",
+            "Noah",
+            "Ava",
+            "William",
+            "Sophia",
+            "James",
+            "Isabella",
+            "Oliver",
+        ]
+    )
     title = f"placeholder title for msg {num}"
-    date = random_date(datetime(2024, 1, 1), datetime(2024, 12, 31)).strftime("%Y-%m-%d")
-    with open(f'pages/messages/message-{sent_prefix}{num}.html', "w") as msg:
-        msg.write(f"""
+    date = random_date(datetime(2024, 1, 1), datetime(2024, 12, 31)).strftime(
+        "%Y-%m-%d"
+    )
+    with open(f"pages/messages/message-{sent_prefix}{num}.html", "w") as msg:
+        msg.write(
+            f"""
                   <table class="stretch">
                   <tr>
                   <td class='left'>{author}</td>
@@ -36,20 +53,22 @@ def generate_message(sent, num):
 <div class='container-message-content'>
                   Example message\n\t\tMessage number {num}\nAuthor: {author}
 </div>
-                  """)
+                  """
+        )
         msg.close()
     if sent == True:
         message_str += f'<td><a href="{href}">{author}</a></td>'
-    message_str += f'''
+    message_str += f"""
  <td style={unread}><a href="{href}">{author}</a></td>
           <td>{title}</td>
           <td>{date}</td>
-    '''
+    """
 
-    return message_str + '<td>Trash</td></tr>'
+    return message_str + "<td>Trash</td></tr>"
+
 
 def generate_messages(sent):
-    final_page = f'''
+    final_page = f"""
        <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,9 +90,11 @@ def generate_messages(sent):
         </tr>
     </thead>
     <tbody>
-    '''
+    """
     final_page += "".join([generate_message(sent, i) for i in range(50)])
-    return final_page + f'''
+    return (
+        final_page
+        + f"""
                 </tbody>
         </table>
 
@@ -83,17 +104,21 @@ def generate_messages(sent):
 
         </body>
         </html>
-       '''
+       """
+    )
+
 
 def generate_messages_html():
+    path = os.path.dirname(os.path.abspath(__file__))
+    os.makedirs(path + "/../" "pages/messages", exist_ok=True)
     recieved_final_page = generate_messages(False)
 
-    with open('pages/messages.html', "w") as msgs:
+    with open("pages/messages.html", "w") as msgs:
         msgs.write(recieved_final_page)
         msgs.close()
     sent_final_page = generate_messages(True)
 
-    with open('pages/sent_messages.html', "w") as msgs:
+    with open("pages/sent_messages.html", "w") as msgs:
         msgs.write(sent_final_page)
         msgs.close()
 
