@@ -1,4 +1,5 @@
 # Dependancy-less Static HTML server for [librus-apix](https://github.com/RustySnek/librus-apix) 🐍 testing purposes.
+### Currently done on pretty low effort and has some gibberish data in it. Fine for testing otherwise.
 ```bash
 # generate pages running scripts/
 python scripts/generate_xyz.py
