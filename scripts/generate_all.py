@@ -3,6 +3,7 @@ from generate_announcements import generate_announcements_html
 from generate_messages import generate_messages_html
 from generate_timetable import generate_timetable_html
 from generate_attendance import generate_attendance_html
+from generate_completed_lessons import generate_completed_html
 
 
 def gen_all_html():
@@ -11,6 +12,7 @@ def gen_all_html():
     generate_attendance_html()
     generate_grades_html()
     generate_announcements_html()
+    generate_completed_html()
 
 
 if __name__ == "__main__":
