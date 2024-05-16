@@ -21,15 +21,27 @@ def generate_message(sent, num):
     date = random_date(datetime(2024, 1, 1), datetime(2024, 12, 31)).strftime("%Y-%m-%d")
     with open(f'pages/messages/message-{sent_prefix}{num}.html', "w") as msg:
         msg.write(f"""
+                  <table class="stretch">
+                  <tr>
+                  <td class='left'>{author}</td>
+                  </tr>
+                 <tr>
+                  <td class='left'>{title}</td>
+                  </tr>
+                 <tr>
+                  <td class='left'>{date}</td>
+                  </tr>
+                
+                  </table>
 <div class='container-message-content'>
                   Example message\n\t\tMessage number {num}\nAuthor: {author}
 </div>
                   """)
         msg.close()
     if sent == True:
-        message_str += f'<td>{author}</td>'
+        message_str += f'<td><a href="{href}">{author}</a></td>'
     message_str += f'''
- <td style={unread}><a href={href}>{author}</a></td>
+ <td style={unread}><a href="{href}">{author}</a></td>
           <td>{title}</td>
           <td>{date}</td>
     '''
