@@ -23,12 +23,10 @@ def generate_lesson(date: datetime, num):
     <td>{num}</td>
     <td>{', '.join(list(choice(lesson_teachers)))}</td>
     <td>{choice(categories)}</td>
-    <td></td>
-    <td>
+    <td>z_val</td>
         <p class="box">
-            <a onclick="///attendance-{num}"></a>
+            <a onclick="///attendance-{num},"></a>
         </p>
-    </td>
     """
     return lesson + "</tr>"
 
