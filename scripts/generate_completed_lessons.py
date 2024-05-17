@@ -1,6 +1,7 @@
 from datetime import datetime
 from random import choice
 
+
 def generate_lesson(date: datetime, num):
     categories = ["Exam", "Quiz", "Homework", "Project", "Presentation"]
     lesson_teachers = [
@@ -15,12 +16,12 @@ def generate_lesson(date: datetime, num):
         ("Geography", "Professor Brown"),
         ("Music", "Mr. Wilson"),
     ]
-    lesson = f'''
+    lesson = f"""
     <tr>
     <td class="center small">{date.strftime('%Y-%m-%d')}</td>
     <td class="tiny">{date.strftime("%A")}</td>
     <td>{num}</td>
-    <td>{' '.join(list(choice(lesson_teachers)))}</td>
+    <td>{', '.join(list(choice(lesson_teachers)))}</td>
     <td>{choice(categories)}</td>
     <td></td>
     <td>
@@ -28,16 +29,18 @@ def generate_lesson(date: datetime, num):
             <a onclick="///attendance-{num}"></a>
         </p>
     </td>
-    '''
+    """
     return lesson + "</tr>"
 
+
 def generate_completed(date: datetime):
-    page = f'''
+    page = f"""
     <table class="decorated">
         <tbody>
-    '''
+    """
     page += "".join(generate_lesson(date, n) for n in range(15))
-    return page + '</tbody></table>'
+    return page + "</tbody></table>"
+
 
 def generate_completed_html():
     now = datetime.now()
