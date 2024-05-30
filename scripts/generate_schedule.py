@@ -1,3 +1,5 @@
+import calendar
+from datetime import datetime
 from random import choice, randint
 
 
@@ -65,7 +67,16 @@ def generate_schedule_day(num):
 
 
 def generate_schedule_html():
-    days = "".join(generate_schedule_day(n) for n in range(30))
+    current_date = datetime.now()
+
+    # Get the current month and year
+    current_month = current_date.month
+    current_year = current_date.year
+
+    # Get the number of days in the current month
+    num_days_current_month = calendar.monthrange(current_year, current_month)[1]
+
+    days = "".join(generate_schedule_day(n) for n in range(1, num_days_current_month))
     with open("pages/schedule.html", "w") as schedule:
         schedule.write(days)
         schedule.close()

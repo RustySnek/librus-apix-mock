@@ -1,9 +1,10 @@
-from datetime import timedelta, datetime
-from random import randint, choice
+from datetime import datetime, timedelta
+from random import choice, randint
 
 
-def generate_attendances(date_str, _type, period):
+def generate_attendances(date_str, period):
     _types = {"nb": "unattended", "sp": "late", "u": "excused", "zw": "freed"}
+    _type = choice(list(_types.keys()))
     attendance_str = ""
     subject = choice(
         [
@@ -38,11 +39,9 @@ def generate_day(initial_date, num, next_sem):
     if num == 1 and next_sem:
         day_str += '<td class="center bolded"></td>'
     date = (initial_date + timedelta(days=num)).strftime("%Y-%m-%d")
-    day_str += f"<td >{date}</td>"
-    day_str += "".join(
-        generate_attendances(date, "nb", n) for n in range(randint(7, 15))
-    )
-    return day_str + "</tr>"
+    day_str += f"<td >{date}</td> <td class='center'>"
+    day_str += "".join(generate_attendances(date, n) for n in range(randint(7, 15)))
+    return day_str + "</td></tr>"
 
 
 def generate_semester(initial_date, next_sem):

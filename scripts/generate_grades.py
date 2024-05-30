@@ -17,7 +17,7 @@ def random_category():
 
 # Function to generate a random count to average
 def random_count_to_average():
-    return random.choice(["Tak", "Nie"])
+    return random.choice(["tak", "nie"])
 
 
 # Generate td elements
@@ -48,15 +48,13 @@ def generate_td_elements(num_elements, teacher, subject):
             else:
                 grade_text = str(grade)
                 grade_value = grade
-        weight = random.randint(1, 5)
+        weight = random.randint(1, 5) if count_to_average == "tak" else 0
         grades.extend([grade_value] * weight)
         href = f"{base_href}{i}"
         td = f"""
-        <td>
           <span class="grade-box" id="grade-box">
-            <a href="{href}" title="Data: {date}<br>Kategoria: {category}<br>Nauczyciel: {teacher}<br>Waga: {weight}<br>Licz do średniej: {count_to_average}">{grade_text}</a>
+            <a href="{href}" title="Data: {date}<br>Kategoria: {category}<br>Nauczyciel: {teacher}<br>Waga: {weight}<br>Licz do &#347;redniej: {count_to_average}">{grade_text}</a>
           </span>
-        </td>
         """
         td_list.append(td)
     return td_list, grades
@@ -64,12 +62,14 @@ def generate_td_elements(num_elements, teacher, subject):
 
 def generate_semester(final_page, teacher, num_elements, subject):
     td_elements, grades = generate_td_elements(num_elements, teacher, subject)
+    final_page += "<td>"
     for td in td_elements:
         final_page += td
 
     # Calculate average of grades
-    average_grade = sum(grades) / len(grades)
+    average_grade = sum(grades) / len(grades) if len(grades) > 0 else 0
     average = f"""
+    </td>
       <td class="right">{average_grade:.2f}</td>
       <td class="center">-</td>
       <td class="right">-</td>
