@@ -45,7 +45,7 @@ def generate_day(initial_date, num, next_sem):
 
 
 def generate_semester(initial_date, next_sem):
-    return "".join(generate_day(initial_date, n, next_sem) for n in range(25))
+    return "".join(generate_day(initial_date, n, next_sem) for n in range(1, 25))
 
 
 def generate_attendance():
@@ -53,7 +53,7 @@ def generate_attendance():
         <table class="center big decorated">
     """
     now = datetime.now()
-    final_page += generate_semester(now, False)
+    final_page += generate_semester(now, True)
     final_page += generate_semester(now + timedelta(days=180), True)
 
     return final_page + "</table>"
