@@ -1,6 +1,7 @@
-from random import choice
-from generate_grades import datetime, random_date
 import os
+from random import choice
+
+from generate_grades import datetime, random_date
 
 
 def generate_message(sent, num):
@@ -59,8 +60,8 @@ def generate_message(sent, num):
     if sent == True:
         message_str += f'<td><a href="{href}">{author}</a></td>'
     message_str += f"""
- <td style={unread}><a href="{href}">{author}</a></td>
-          <td>{title}</td>
+ <td><a href="{href}">{author}</a></td>
+          <td style="{unread}">{title}</td>
           <td>{date}</td>
     """
 

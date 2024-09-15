@@ -24,7 +24,7 @@ def generate_attendances(date_str, period):
     categories = ["Exam", "Quiz", "Homework", "Project", "Presentation"]
     topic = choice(categories)
     excursion = ["nie", "tak"][0]
-    href = f"x/y/z/attendance-{date_str}.html/,"
+    href = f"x/y/z/attendance-{date_str}-{period}.html/,"
     title = f"Data: {date_str}<br>Rodzaj: {_types[_type]}<br>Lekcja: {subject[0]}<br>Temat zajęć: {topic}<br>Godzina lekcyjna: {period}<br>Czy wycieczka: {excursion}<br>Nauczyciel: {subject[1]}"
     attendance_str += f'<a title="{title}" onclick="{href}">{_type}</a>'
     return attendance_str
