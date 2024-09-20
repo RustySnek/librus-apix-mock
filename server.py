@@ -1,12 +1,29 @@
 import http.server
 import json
 import os
+import random
 import socketserver
 import uuid
 from http.cookies import SimpleCookie
 
 PORT = int(os.getenv("MOCK_PORT", 8000))
 DIRECTORY_TO_SERVE = "pages"
+
+
+def attendance():
+    return {
+        "Type": {
+            "Id": random.choice(
+                ["1", "2", "3", "4", "100", "100", "100", "100", "100", "100"]
+            )
+        },
+        "LessonNo": random.randint(0, 12),
+        "Semester": random.randint(0, 1),
+    }
+
+
+def build_gateway_attendance():
+    return {"Attendances": [attendance() for _ in range(5)]}
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -27,6 +44,22 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.send_header("Set-Cookie", cookie.OutputString())
             self.end_headers()
             self.wfile.write(json.dumps({"status": "ok", "goTo": "/"}).encode())
+        elif self.path.startswith("/api_attendance"):
+            gateway_absence = build_gateway_attendance()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            print(json.dumps(gateway_absence))
+            self.wfile.write(json.dumps(gateway_absence).encode())
+
+        elif self.path.startswith("/oauth"):
+            cookies = SimpleCookie()
+            oauth = uuid.uuid1().__str__()
+            cookies["oauth_token"] = oauth
+            self.send_response(200)
+            for cookie in cookies.values():
+                self.send_header("Set-Cookie", cookie.OutputString())
+            self.end_headers()
 
         elif self.path.startswith("/messages.html/") and len(self.path) > len(
             "/messages.html/"
